@@ -1,8 +1,152 @@
-<!doctype html>
-<html>
-  <script>
-    window.location.href = "https://flic.kr/s/aHBqjC9Abv"
-  </script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Film Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <h1>Film Gate — Jan Liam Verter</h1>
+        <nav>
+            <a href="#work">Work</a>
+            <a href="#about">About</a>
+        </nav>
+    </header>
+
+    <main class="content-area">
+        <section class="gallery">
+          <div class="photo">
+              <img loading="lazy" src="photos/img_1.jpg" alt="35mm Landscape">
+          </div>
+          <div class="photo">
+              <img loading="lazy" src="photos/img_2.jpg" alt="6x4.5 Portrait">
+          </div>
+          <div class="photo">
+              <img loading="lazy" src="photos/img_3.jpg" alt="XPan Panorama">
+          </div>
+          <div class="photo">
+              <img loading="lazy" src="photos/img_4.jpg" alt="35mm Landscape">
+          </div>
+          <div class="photo">
+              <img loading="lazy" src="photos/img_5.jpg" alt="35mm Landscape">
+          </div>
+          <div class="photo">
+              <img loading="lazy" src="photos/img_6.png" alt="35mm Landscape">
+          </div>
+          <div class="photo">
+              <img loading="lazy" src="photos/img_7.png" alt="35mm Landscape">
+          </div>
+          <div class="photo">
+              <img loading="lazy" src="photos/img_8.png" alt="35mm Landscape">
+          </div>
+          <div class="photo">
+              <img loading="lazy" src="photos/img_9.png" alt="35mm Landscape">
+          </div>
+          <div class="photo">
+              <img loading="lazy" src="photos/img_10.png" alt="35mm Landscape">
+          </div>
+          <div class="photo">
+              <img loading="lazy" src="photos/img_11.png" alt="35mm Landscape">
+          </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 — Shot on Film</p>
+    </footer>
+
+<!-- 
+  <dialog id="lightbox" class="lightbox-overlay">
+    <img id="lightbox-img" src="" alt="">
+    <button id="close-lightbox" aria-label="Close">×</button>
+  </dialog> -->
+
+  <dialog id="lightbox" class="lightbox-overlay">
+    <button id="prev-btn" class="nav-btn" aria-label="Previous">❮</button>
+    <img id="lightbox-img" src="" alt="">
+    <button id="next-btn" class="nav-btn" aria-label="Next">❯</button>
+    <button id="close-lightbox" aria-label="Close">×</button>
+</dialog>
+
+</body>
+
+<script>
+  const images = Array.from(document.querySelectorAll('.gallery img'));
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const closeBtn = document.getElementById('close-lightbox');
+  let currentIndex = 0;
+
+  // Open Lightbox
+  document.querySelector('.gallery').addEventListener('click', (e) => {
+      if (e.target.tagName === 'IMG') {
+          currentIndex = images.indexOf(e.target);
+          updateLightbox();
+          lightbox.showModal();
+      }
+
+      // Target the next button and focus it
+        document.getElementById('next-btn').focus();
+  });
+
+  function updateLightbox() {
+      lightboxImg.src = images[currentIndex].src;
+  }
+
+  // Navigation Functions
+  function showNext() {
+      currentIndex = (currentIndex + 1) % images.length; // Loops back to start
+      updateLightbox();
+  }
+
+  function showPrev() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length; // Loops to end
+      updateLightbox();
+  }
+
+  // Close when clicking the 'X' button specifically
+  closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // Stop the click from bleeding into the background
+      lightbox.close();
+  });
+
+  // Close when clicking the backdrop (the area outside the image)
+  lightbox.addEventListener('click', (e) => {
+      // Only close if the user clicked the <dialog> itself, 
+      // NOT the image or the buttons inside it.
+      if (e.target === lightbox) {
+          lightbox.close();
+      }
+  });
+
+  // Event Listeners
+  document.getElementById('next-btn').addEventListener('click', (e) => {
+      e.stopPropagation(); // Prevents clicking the arrow from closing the modal
+      showNext();
+  });
+
+  document.getElementById('prev-btn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      showPrev();
+  });
+
+  // Pro-tip: Keyboard Navigation
+  document.addEventListener('keydown', (e) => {
+      if (!lightbox.open) return;
+      if (e.key === 'ArrowRight') showNext();
+      if (e.key === 'ArrowLeft') showPrev();
+      if (e.key === 'Escape') {
+        // Prevent Safari/Chrome from exiting full-screen mode
+        e.preventDefault(); 
+        // Prevent the event from bubbling up to the browser UI
+        e.stopPropagation(); 
+        
+        lightbox.close();
+    }
+  });
+</script>
+
 </html>
-
-

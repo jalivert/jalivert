@@ -7,8 +7,6 @@ I am a programming languages and type theory researcher from Prague, currently w
 #### :camera: 🎞️ 🏞️ Personal
 Outside work, I like to take photos on film. I develop film and process the photos myself. I also design 3D printable devices that help me with that.
 
-##### 🧵 [_spooler_ a film bulk loader](https://github.com/jalivert/spooler) 🎞️
-
 
 📸 Also here's my current favorite image.
 
@@ -22,7 +20,17 @@ I sometimes write about what I learned to my [notepad](https://github.com/jalive
 
 
 #### 💼 🗃️ My Projects
-Here are some of my past projects.
+Here are some of my past projects. I mostly do PL, TT, logic, and formal reasoning related ones but sometimes I do something completely different.
+
+##### 3D Product Design
+
+###### 🧵 [_spooler_ a film bulk loader](https://github.com/jalivert/spooler) 🎞️
+
+##### Web Demos and Experiments
+
+###### [Canvas-mouse](https://github.com/jalivert/canvas-mouse) 🌈 🐭
+
+A small web canvas demo. A color-gradient follows your mouse. The main point was how much performance can I squeeze from the browser without useing WebGL or WebGPU.
 
 ##### Theorem Provers
 

@@ -26,11 +26,15 @@ Here are some of my past projects. I mostly do PL, TT, logic, and formal reasoni
 
 ###### 🧵 [_spooler_ a film bulk loader](https://github.com/jalivert/spooler) 🎞️
 
+
+<!--
 ##### Web Demos and Experiments
 
 ###### [Canvas-mouse](https://github.com/jalivert/canvas-mouse) 🌈 🐭
 
 A small web canvas demo. A color-gradient follows your mouse. The main point was how much performance can I squeeze from the browser without useing WebGL or WebGPU.
+
+-->
 
 ##### Theorem Provers
 

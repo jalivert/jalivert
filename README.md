@@ -24,6 +24,8 @@ Here are some of my past projects. I mostly do PL, TT, logic, and formal reasoni
 
 ##### 3D Product Design
 
+###### 🗜️ [_gravity holder V1_ a film holder for DSLR scanning](https://github.com/jalivert/gravity-holder) 🎞️
+
 ###### 🧵 [_spooler_ a film bulk loader](https://github.com/jalivert/spooler) 🎞️
 
 

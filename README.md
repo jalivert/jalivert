@@ -1,53 +1,73 @@
-#### 👔 Work
-I am a programming languages and type theory researcher from Prague, currently working at Faculty of Mathematics and Physics at CUNI.
+## 👔 Work
+I am a programming languages and type theory researcher from Prague, currently working at the Faculty of Mathematics and Physics at Charles University (CUNI).
 
 🧮 I am interested in systems for formal reasoning, programming languages and mathematical logic. I build small programming languages, theorem provers, and other systems related to PLT concepts.
 
 
-#### :camera: 🎞️ 🏞️ Personal
+## :camera: 🎞️ 🏞️ Personal
 Outside work, I like to take photos on film. I develop film and process the photos myself. I also design 3D printable devices that help me with that.
 
 
 📸 Also here's my current favorite image.
 
 <div align="center">
-  <img width="295.888888889" height="391.888888889" alt="a minimalist photo of a side of a concrete panel building, it's a black and white photo colorized to be black and orange instead" src="https://github.com/user-attachments/assets/9787e411-1fb0-47c2-a10d-ae944607566f" />
+  <img width="296" height="392" alt="a minimalist photo of a side of a concrete panel building, it's a black and white photo colorized to be black and orange instead" src="https://github.com/user-attachments/assets/9787e411-1fb0-47c2-a10d-ae944607566f" />
 </div>
 
 
-#### 🖋️ My Writings
-I sometimes write about what I learned to my [notepad](https://github.com/jalivert/reading).
+## 🖋️ My Writings
+I sometimes write about what I learned to my [digital notepad](https://github.com/jalivert/reading).
 
 
-#### 💼 🗃️ My Projects
-Here are some of my past projects. I mostly do PL, TT, logic, and formal reasoning related ones but sometimes I do something completely different.
+## 3D Product Design
+I design free, open-source 3D printable alternatives to commercial devices for film photography.
 
-##### 3D Product Design
+### 🗜️ [gravity holder V1](https://github.com/jalivert/gravity-holder) 🎞️
+a film holder for DSLR scanning
 
-###### 🗜️ [_gravity holder V1_ a film holder for DSLR scanning](https://github.com/jalivert/gravity-holder) 🎞️
+### 🧵 [spooler](https://github.com/jalivert/spooler) 🎞️
+a film bulk loader
 
-###### 🧵 [_spooler_ a film bulk loader](https://github.com/jalivert/spooler) 🎞️
+## 💼 🗃️ My Research Projects
+Here are some of my past research projects. I mostly do PL, TT, logic, and formal reasoning related ones.
 
-
-<!--
-##### Web Demos and Experiments
-
-###### [Canvas-mouse](https://github.com/jalivert/canvas-mouse) 🌈 🐭
-
-A small web canvas demo. A color-gradient follows your mouse. The main point was how much performance can I squeeze from the browser without useing WebGL or WebGPU.
-
--->
-
-##### Theorem Provers
-
-###### [Detour](https://github.com/jalivert/detour) :pear: :tomato:
+### [Detour](https://github.com/jalivert/detour) :pear: :tomato:
 
 A research prototype behind our HATRA'24 (SPLASH) paper [`Don't Call Us, We'll Call You`](https://github.com/jalivert/detour/blob/main/hatra24.pdf).
-Small Fitch-style FOL checker in Haskell, with automated prove search over user-declared syntax and induction.
+Small Fitch-style FOL checker in Haskell, with automated proof search over user-declared syntax and induction.
 
-###### [Resin](https://github.com/jalivert/resin) :hibiscus: :tulip:
+<details>
+<summary>Show example snippet</summary>
+
+```
+module demo
+
+syntax N = Zero
+         | Suc(N)
+
+judgment sum = Sum(N, N, N)
+
+rule schema sum-zero for all objects (n : N) :
+|
+|-------------------------------------- sum-zero
+| Sum(Zero, n, n)
+
+rule schema sum-suc for all objects (m : N), (n : N), (o : N) :
+| Sum(m, n, o)
+|-------------------------------------- sum-suc
+| Sum(Suc(m), n, Suc(o))
+
+theorem zero-plus-one : Sum(Suc(Zero), Zero, Suc(Zero))
+prove Sum(Suc(Zero), Zero, Suc(Zero))
+```
+</details>
+
+### [Resin](https://github.com/jalivert/resin) :hibiscus: :tulip:
 
 A small automated theorem prover for _First Order Classical Logic_ built on *resolution*.
+
+<details>
+<summary>Show example snippet</summary>
 
 ```
 constants: zero .
@@ -65,35 +85,41 @@ axioms: ∀ n Plus(0, n, n)
       , ∀ n pr r [Fact(n, pr) ∧ Times(suc(n), pr, r) ==> Fact(suc(n), r)]
       .
 
-theorem fact-0-is-1: Fact(0, 1) .
+theorem fact-0-is-1 : Fact(0, 1) .
 
 theorem fact-1-is-1 : Fact(1, 1) .
 
 theorem exists-fact-for-1 : ∃ n Fact(n, 1) .
 ```
+</details>
 
-###### [Plover](https://github.com/jalivert/plover) :rose:
+### [Plover](https://github.com/jalivert/plover) :rose:
 
 Plover is a small automated theorem prover based on a logic language like *Prolog*.
 The main idea is to replace *Minilog's* depth-first search strategy with a complete one.
 
 The main difference the complete search strategy makes is that the language can productively answer queries like `nat(A).` for a knowledge base like the following:
 
+<details>
+<summary>Show example snippet</summary>
+
 ```prolog
 nat(s(N)) :- nat(N).
 nat(z).
 ```
+</details>
 
 
-##### Logic Languages
-
-###### [Minilog](https://github.com/jalivert/minilog) :cherry_blossom:
+### [Minilog](https://github.com/jalivert/minilog) :cherry_blossom:
 
 Minilog is an implementation of a small logic programming language.
 The primary purpose of it is to present a simple abstract machine that can be easily implemented in any language and can serve as an aid when making the intuition about how such a language works.
 
-I have designed the abstract machine and written a [description](https://github.com/lambduli/minilog/blob/main/WRITEUP.md) of it for (not only) my students to learn about how such a language works.
+I have designed the abstract machine and written a [description](https://github.com/jalivert/minilog/blob/main/WRITEUP.md) of it for (not only) my students to learn about how such a language works.
 It is meant to inspire and offer a starting point to them should they decide to implement a small subset of Prolog as their course project.
+
+<details>
+<summary>Show example snippet</summary>
 
 ```prolog
 plus(z, N, N).
@@ -105,16 +131,17 @@ times(s(N), M, A) :- times(N, M, R), plus(R, M, A).
 fact(z, s(z)).
 fact(s(N), R) :- fact(N, PR), times(s(N), PR, R).
 ```
+</details>
 
 
-##### Functional Statically Typed Languages
-
-###### [Frea](https://github.com/jalivert/frea) :chestnut:
+### [Frea](https://github.com/jalivert/frea) :chestnut:
 
 Small programming language with HM type inference, higher-kinded types, and lazy evaluation.
 Implemented as an AST interpreter in Haskell.
 
-  
+<details>
+<summary>Show example snippet</summary>
+
 ```haskell
 module Main where
 
@@ -131,5 +158,4 @@ module Main where
   } in (Some (fact 5))
 }
 ```
-
-
+</details>

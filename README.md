@@ -42,8 +42,8 @@ A small web canvas demo. A color-gradient follows your mouse. The main point was
 
 ###### [Detour](https://github.com/jalivert/detour) :pear: :tomato:
 
-A toy proof-checker for first-order predicate logic natural deduction in Fitch-style notation.
-
+A research prototype behind our HATRA'24 (SPLASH) paper [`Don't Call Us, We'll Call You`](https://github.com/jalivert/detour/blob/main/hatra24.pdf).
+Small Fitch-style FOL checker in Haskell, with automated prove search over user-declared syntax and induction.
 
 ###### [Resin](https://github.com/jalivert/resin) :hibiscus: :tulip:
 

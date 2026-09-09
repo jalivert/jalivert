@@ -64,7 +64,7 @@ prove Sum(Suc(Zero), Zero, Suc(Zero))
 
 ### [Resin](https://github.com/jalivert/resin) :hibiscus: :tulip:
 
-A small automated theorem prover for _First Order Classical Logic_ built on *resolution*. The resolution machinery follows the [Handbook of Practical Logic and Automated Reasoning](https://www.cl.cam.ac.uk/~jrh13/atp/), supplemented by background from [Artificial Intelligence: A Modern Approach](https://aima.cs.berkeley.edu) (chapters 7–9); the structure of the implementation reflects those texts.
+A small automated theorem prover for _First Order Classical Logic_ built on *resolution*. The resolution machinery follows the [`Handbook of Practical Logic and Automated Reasoning`](https://www.cl.cam.ac.uk/~jrh13/atp/), supplemented by background from [`Artificial Intelligence: A Modern Approach`](https://aima.cs.berkeley.edu) (chapters 7–9); the structure of the implementation reflects those texts.
 
 <details>
 <summary>Show example snippet</summary>
@@ -115,7 +115,7 @@ nat(z).
 Minilog is an implementation of a small logic programming language.
 The primary purpose of it is to present a simple abstract machine that can be easily implemented in any language and can serve as an aid when making the intuition about how such a language works.
 
-I have designed the abstract machine and written a [description](https://github.com/jalivert/minilog/blob/main/WRITEUP.md) of it for (not only) my students to learn about how such a language works.
+I have designed the abstract machine and written a short description, [`Implementing Relational Language`](https://github.com/jalivert/minilog/blob/main/WRITEUP.md), of it for (not only) my students to learn about how such a language works.
 It is meant to inspire and offer a starting point to them should they decide to implement a small subset of Prolog as their course project.
 
 <details>
@@ -159,3 +159,9 @@ module Main where
 }
 ```
 </details>
+
+
+### [Lambdulus](https://github.com/lambdulus) 🌲
+
+Lambdulus is an [interactive learning environment](https://lambdulus.github.io/) for the untyped lambda calculus. It began as my bachelor thesis [`Implementation of lambda expressions evaluator`](https://dspace.cvut.cz/server/api/core/bitstreams/7e28cbae-c8dc-49c1-9a94-472052deb057/content) and later became a paper I and my supervisor presented at SPLASH-E'19 [`Lambdulus: Teaching Lambda Calculus Practically`](https://dl.acm.org/doi/10.1145/3358711.3361629). Lambdulus has been used at FIT CTU since the autumn 2019 as a teaching aid for lambda calculus.                                                                                                       
+                                                                                                                                                                                                                                      

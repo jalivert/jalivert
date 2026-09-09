@@ -4,7 +4,7 @@ I am a programming languages and type theory researcher from Prague, currently w
 🧮 I am interested in systems for formal reasoning, programming languages and mathematical logic. I build small programming languages, theorem provers, and other systems related to PLT concepts.
 
 
-## :camera: 🎞️ 🏞️ Personal
+## :camera: Personal 🎞️ 🏞️
 Outside work, I like to take photos on film. I develop film and process the photos myself. I also design 3D printable devices that help me with that.
 
 
@@ -28,7 +28,7 @@ a film holder for DSLR scanning
 ### 🧵 [spooler](https://github.com/jalivert/spooler) 🎞️
 a film bulk loader
 
-## 💼 🗃️ My Research Projects
+## 💼 My Research Projects 🗃️
 Here are some of my past research projects. I mostly do PL, TT, logic, and formal reasoning related ones.
 
 ### [Detour](https://github.com/jalivert/detour) :pear: :tomato:
@@ -163,5 +163,4 @@ module Main where
 
 ### [Lambdulus](https://github.com/lambdulus) 🌲
 
-Lambdulus is an [interactive learning environment](https://lambdulus.github.io/) for the untyped lambda calculus. It began as my bachelor thesis [`Implementation of lambda expressions evaluator`](https://dspace.cvut.cz/server/api/core/bitstreams/7e28cbae-c8dc-49c1-9a94-472052deb057/content) and later became a paper I and my supervisor presented at SPLASH-E'19 [`Lambdulus: Teaching Lambda Calculus Practically`](https://dl.acm.org/doi/10.1145/3358711.3361629). Lambdulus has been used at FIT CTU since the autumn 2019 as a teaching aid for lambda calculus.                                                                                                       
-                                                                                                                                                                                                                                      
+Lambdulus is an [interactive learning environment](https://lambdulus.github.io/) for the untyped lambda calculus. It began as my bachelor thesis [`Implementation of lambda expressions evaluator`](https://dspace.cvut.cz/server/api/core/bitstreams/7e28cbae-c8dc-49c1-9a94-472052deb057/content) and later became a paper I and my supervisor presented at SPLASH-E'19 [`Lambdulus: Teaching Lambda Calculus Practically`](https://dl.acm.org/doi/10.1145/3358711.3361629). Lambdulus has been used at FIT CTU since the autumn 2019 as a teaching aid for λ-calculus.

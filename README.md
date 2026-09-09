@@ -64,7 +64,7 @@ prove Sum(Suc(Zero), Zero, Suc(Zero))
 
 ### [Resin](https://github.com/jalivert/resin) :hibiscus: :tulip:
 
-A small automated theorem prover for _First Order Classical Logic_ built on *resolution*.
+A small automated theorem prover for _First Order Classical Logic_ built on *resolution*. The resolution machinery follows the [Handbook of Practical Logic and Automated Reasoning](https://www.cl.cam.ac.uk/~jrh13/atp/), supplemented by background from [Artificial Intelligence: A Modern Approach](https://aima.cs.berkeley.edu) (chapters 7–9); the structure of the implementation reflects those texts.
 
 <details>
 <summary>Show example snippet</summary>

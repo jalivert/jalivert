@@ -134,6 +134,74 @@ fact(s(N), R) :- fact(N, PR), times(s(N), PR, R).
 </details>
 
 
+### [Glask](https://github.com/jalivert/glask) 🌻
+
+Glask is a statically typed, lazy, pure functional language in the spirit of Haskell, written as my [`master's thesis`](https://dspace.cvut.cz/server/api/core/bitstreams/de31dcfd-386b-4860-a095-26b0588c091c/content) (CTU FIT,    
+2022). Built on three papers — Mark P Jones's [`Typing Haskell in Haskell`](https://web.cecs.pdx.edu/~mpj/thih/thih.pdf),
+Simon Peyton Jones et al.'s [`Practical Type Inference for Arbitrary-Rank Types`](https://doi.org/10.1017/S0956796806006034),
+and Peterson & Jones's [`Implementing Type Classes`](https://doi.org/10.1145/173262.155112) — it features constraint-based bidirectional type        
+inference, higher-rank polymorphism, type classes with dictionary-passing elaboration, higher-kinded data types, and            
+user-defined prefix/infix/postfix operators resolved by my own variation of Dijkstra's shunting-yard algorithm.
+
+<details>
+<summary>Show example snippet</summary>
+```
+infixl 6 +
+infixl 6 -
+infixl 7 *
+infixl 7 /
+infix 4 ==
+infixr 5 :
+
+class Num a where
+  (+) :: a -> a -> a
+  (-) :: a -> a -> a
+  (*) :: a -> a -> a
+
+instance Num Int where
+  (+) x y = int#+ (x, y)
+  (-) x y = int#- (x, y)
+  (*) x y = int#* (x, y)
+
+class Div a where
+  (/) :: a -> a -> a
+
+instance Div Int where
+  (/) x y = int#/ (x, y)
+
+class Eq a where
+  (==) :: a -> a -> Bool
+
+instance Eq Int where
+  (==) x y = int#== (x, y)
+
+data Bool = True | False
+
+not True = False
+not False = True
+
+mod :: Int -> Int -> Int
+mod x y = x - (x / y) * y
+
+divides :: Int -> Int -> Bool
+divides d n = mod n d == 0
+
+from :: Int -> [Int]
+from n = n : from (n + 1)
+
+filter :: (a -> Bool) -> [a] -> [a]
+filter _ [] = []
+filter p (x : xs) = if p x then x : filter p xs else filter p xs
+
+sieve :: [Int] -> [Int]
+sieve (p : xs) = p : sieve (filter (\ x -> not (divides p x)) xs)
+
+primes :: [Int]
+primes = sieve (from 2)
+```
+</details>
+
+
 ### [Frea](https://github.com/jalivert/frea) :chestnut:
 
 Small programming language with HM type inference, higher-kinded types, and lazy evaluation.

@@ -228,6 +228,17 @@ module Main where
 ```
 </details>
 
+### [Lambda-pie](https://github.com/jalivert/lambda-pie) 🌱
+
+A version of the implementation described in [`A Tutorial Implementation of a Dependently Typed Lambda Calculus`](https://www.andres-loeh.de/LambdaPi/LambdaPi.pdf) by Löh, McBride, and Swierstra. The dependently typed core (λΠ) follows the paper's bidirectional Haskell implementation and the simply typed (λ→) and System F (λ2) checkers reuse that same architecture with their own type languages. Each calculus additionally gets a concrete parser and an interactive REPL on top of the core.
+
+<details>
+<summary>Show example snippet</summary>
+```
+λΠ >> (lambda t x -> x) :: (forall (t :: *) . (forall (x :: t) . t))
+       (λ t -> (λ x -> x)) :: (Π t :: * . (Π x :: t . t))
+```
+</details>
 
 ### [Lambdulus](https://github.com/lambdulus) 🌲
 

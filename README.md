@@ -136,11 +136,11 @@ fact(s(N), R) :- fact(N, PR), times(s(N), PR, R).
 
 ### [Glask](https://github.com/jalivert/glask) 🌻
 
-Glask is a statically typed, lazy, pure functional language in the spirit of Haskell, written as my [`master's thesis`](https://dspace.cvut.cz/server/api/core/bitstreams/de31dcfd-386b-4860-a095-26b0588c091c/content) (CTU FIT,    
+Glask is a statically typed, lazy, pure functional language in the spirit of Haskell, written as my [`master's thesis`](https://dspace.cvut.cz/server/api/core/bitstreams/de31dcfd-386b-4860-a095-26b0588c091c/content) (CTU FIT,
 2022). Built on three papers — Mark P Jones's [`Typing Haskell in Haskell`](https://web.cecs.pdx.edu/~mpj/thih/thih.pdf),
 Simon Peyton Jones et al.'s [`Practical Type Inference for Arbitrary-Rank Types`](https://doi.org/10.1017/S0956796806006034),
-and Peterson & Jones's [`Implementing Type Classes`](https://doi.org/10.1145/173262.155112) — it features constraint-based bidirectional type        
-inference, higher-rank polymorphism, type classes with dictionary-passing elaboration, higher-kinded data types, and            
+and Peterson & Jones's [`Implementing Type Classes`](https://doi.org/10.1145/173262.155112) — it features constraint-based bidirectional type
+inference, higher-rank polymorphism, type classes with dictionary-passing elaboration, higher-kinded data types, and
 user-defined prefix/infix/postfix operators resolved by my own variation of Dijkstra's shunting-yard algorithm.
 
 <details>

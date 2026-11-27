@@ -11,7 +11,10 @@ import { GlaskEngine } from '../src/engines/glask'
 import * as fs from 'fs'
 import * as path from 'path'
 
-const VENDOR = '/Users/liam/Projects/PL&TT/web-demo/vendor'
+// Resolved from the working directory: `npm run test:engines` always runs
+// with cwd set to the package root, locally and on CI. (A hardcoded absolute
+// path used to live here and broke every CI run.)
+const VENDOR = path.resolve('vendor')
 const readVendor = (p: string): string => fs.readFileSync(`${VENDOR}/${p}`, 'utf8')
 
 async function main(): Promise<void> {

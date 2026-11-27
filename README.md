@@ -31,6 +31,8 @@ a film bulk loader
 ## 💼 My Research Projects 🗃️
 Here are some of my past research projects. I mostly do PL, TT, logic, and formal reasoning related ones.
 
+> 🖥️ **Try them live: [Logic Playground](https://jalivert.github.io/jalivert/)** — the projects below running in your browser, each with an editor and an interactive REPL. No installation needed.
+
 ### [Detour](https://github.com/jalivert/detour) :pear: :tomato:
 
 A research prototype behind our HATRA'24 (SPLASH) paper [`Don't Call Us, We'll Call You`](https://github.com/jalivert/detour/blob/main/hatra24.pdf).

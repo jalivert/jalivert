@@ -472,7 +472,11 @@ function main(): void {
     'keydown',
     (e) => {
       if (e.key === 'Enter' && !$('boot').hidden) {
+        // Swallow the keystroke entirely: preventDefault alone does not stop
+        // xterm (it reads keys in its own listener), so without this the
+        // dismissing Enter leaks through as an empty REPL submission.
         e.preventDefault()
+        e.stopPropagation()
         dismissBoot()
       }
     },

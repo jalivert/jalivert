@@ -1,0 +1,322 @@
+# Detour
+
+[![CI](https://github.com/jalivert/detour/actions/workflows/ci.yml/badge.svg)](https://github.com/jalivert/detour/actions/workflows/ci.yml)
+
+This repository contains the Haskell implementation of Detour: a small interactive proof assistant for first-order logic, together with a collection of example proofs. It is a research prototype built to explore an idea, not a general-purpose prover — see Research context below for what that idea is.
+
+## Research context
+
+Detour is the research prototype behind the paper [*Don't Call Us, We'll Call You: Towards Mixed-Initiative Interactive Proof Assistants for Programming Language Theory*](/hatra24.pdf) (Jan Liam Verter and Tomas Petricek, HATRA at SPLASH 2024).
+
+The point of the project is the interaction model, not prover strength. The usual way of working with a proof assistant is that the human builds the proof and calls automation to discharge the remaining goals. Detour inverts this: the tool opens with an automatic proof search based on a deliberately simple, hardcoded strategy, and pauses to ask the user for guidance wherever the search gets stuck — a setup known as mixed-initiative interaction. The assistant takes care of routine structure (induction over user-declared syntax, case splits, applying rules, lemmas, and local facts) while the human contributes insight at exactly the points that need it. The paper walks through this style of working using a proof of commutativity of addition on Peano naturals.
+
+
+## Implementation
+
+The vehicle for the experiment is a toy proof-checker for first-order predicate logic natural deduction with Fitch-style notation.
+
+It supports a subset of first-order predicate logic and second-order propositional logic with custom definitions for terms and propositions.
+
+## Building and running
+
+You need GHC (9.8–9.12) and Cabal; the `alex` and `happy` build tools are fetched automatically.
+
+```
+cabal build all
+cabal test
+cabal run detour -- [flags] <file.dt>...
+```
+
+The checker reads a `.dt` module, then reports each theorem as checked (`✅`) or failed (`❌`).
+The only flag is `--lem` / `--no-lem` (default `--no-lem`): it allows or disallows
+the classical proof-by-contradiction rule. See [`examples/`](./examples) and [`exs/`](./exs)
+for sample inputs — e.g. `cabal run detour -- examples/impl.dt`.
+
+## A session
+
+The interaction is easier shown than described. Given a tiny theory of addition:
+
+```
+module demo
+
+syntax N = Zero
+         | Suc(N)
+
+judgment sum = Sum(N, N, N)
+
+rule schema sum-zero for all objects (n : N) :
+|
+|-------------------------------------- sum-zero
+| Sum(Zero, n, n)
+
+rule schema sum-suc for all objects (m : N), (n : N), (o : N) :
+| Sum(m, n, o)
+|-------------------------------------- sum-suc
+| Sum(Suc(m), n, Suc(o))
+
+theorem zero-plus-one : Sum(Suc(Zero), Zero, Suc(Zero))
+prove Sum(Suc(Zero), Zero, Suc(Zero))
+```
+
+asking for a proof starts a search that narrates itself — here it needs no help,
+so pressing Enter at each prompt (meaning "I don't know, carry on") is enough:
+
+```
+$ cabal run detour -- demo.dt
+Checking module `demo'
+
+I am solving a theorem `zero-plus-one'
+| searching for a proof of `Sum(Suc(Zeroᶜ), Zeroᶜ, Suc(Zeroᶜ))'
+[...]
+
+I am solving a theorem `zero-plus-one'
+using the rule sum-suc the matched goal = Sum(Suc(_1·?), _2·?, Suc(_3·?))
+  the new goals = Sum(Zeroᶜ, Zeroᶜ, Zeroᶜ)
+[...]
+
+I am solving a theorem `zero-plus-one'
+I had a goal = Sum(Zeroᶜ, Zeroᶜ, Zeroᶜ) and I solved it using a rule sum-zero
+  and got to solve some sub-goals ([]) and those are done.
+[...]
+✅ theorem `zero-plus-one' checked successfully
+```
+
+On harder goals the search gets stuck and waits instead of guessing.
+Running `cabal run detour -- examples/sum-auto.dt` in a terminal ends up here:
+
+```
+|| my goal `∃ (O : ℕᶜ) : Sum(Zeroᶜ, Suc(_3®), Oᵇ)' wasn't proved by any
+   local assert, I am going to try theorems
+[...]
+My current goal is: `Sum(Suc(_1®), Zeroᶜ, _28·?)'
+```
+
+At that prompt you can press Enter to let it continue on its own, type
+`list theorems` or `list locals` to inspect what it has to work with, or paste
+the missing proof steps (a blank line submits them) — and the search carries on
+from there. That handoff, in either direction, is the whole idea.
+
+(Transcripts trimmed; the prototype is chatty and also prints unification traces.)
+
+## Syntax
+
+### Axioms
+You define axioms like so:
+```
+axiom nat-zero : ℕ(Zero)
+axiom nat-suc  : ∀ n : ℕ(n) ==> ℕ(Suc(n))
+
+axiom sum-zero : ∀ n : ℕ(n) ==> Sum(Zero , n , n)
+axiom sum-suc  : ∀ n₁ n₂ n₃ : ℕ(n₁) ==>
+                              ℕ(n₂) ==>
+                              ℕ(n₃) ==>
+                              Sum( n₁ , n₂ , n₃ ) ==> Sum( Suc(n₁) , n₂ , Suc(n₃) )
+```
+
+
+### Inductive Definitions
+You can also define your relations more concisely using the `syntax` and `judgment` declarations.
+Here's an example of the above in the new syntax:
+```
+syntax ℕ  = Zero
+          | Suc(ℕ)
+
+judgment sum = Sum(ℕ, ℕ, ℕ)
+
+rule schema sum-zero for all objects (n : ℕ) :
+|
+|-------------------------------------- sum-zero
+| Sum(Zero, n, n)
+
+
+rule schema sum-suc for all objects (m : ℕ), (n : ℕ), (o : ℕ) :
+| Sum(m, n, o)
+|-------------------------------------- sum-suc
+| Sum(Suc(m), n, Suc(o))
+```
+
+
+### Induction and Case Analysis
+If you declare your relations (using `syntax` and `judgment`) as shown above, the tool supports proofs by induction and case analysis.
+Here's an example of a theorem *total* for addition:
+```
+theorem total : ∀ (n₁ : ℕ) (n₂ : ℕ) : ∃ (n₃ : ℕ) : Sum( n₁ , n₂ , n₃ )
+∀ (n₁ : ℕ) (n₂ : ℕ) : ∃ (n₃ : ℕ) : Sum( n₁ , n₂ , n₃ )  by induction :
+
+  case Zero -> 
+    |
+    |--------------------------------------------------------------------------------------------
+    | uni-n2 :  | for all (n2 : ℕ)
+    |           |--------------------------------------------------------------------------------
+    |           | sz : Sum( Zero , n2 , n3 )  by rule sum-zero
+    |           | ∃ (n₃ : ℕ) : Sum( Zero , n2 , n₃ )  by rule ∃-intro on sz
+    |
+    | ∀ (n₂ : ℕ) : ∃ (n₃ : ℕ) : Sum( Zero , n₂ , n₃ )  by rule ∀-intro on uni-n2
+
+
+  case Suc(m) ->  
+
+    | induction-hypothesis : ∀ (n₂ : ℕ) : ∃ (n₃ : ℕ) : Sum( m , n₂ , n₃ )
+    |--------------------------------------------------------------------------------------------
+    | uni-n2b : | for all (N2 : ℕ)
+    |           |--------------------------------------------------------------------------------
+    |           | d1 : ∃ (n₃ : ℕ) : Sum( m , N2 , n₃ )  by rule ∀-elim on induction-hypothesis
+    |           | exn3 :  | p5 : Sum( m , N2 , n3 ) for some (n3 : ℕ)
+    |           |         |----------------------------------------------------------------------
+    |           |         | sum-m+1 : Sum( Suc(m) , N2 , Suc(n3) )  by rule sum-suc on p5
+    |           |         | ∃ (n₃ : ℕ) : Sum( Suc(m) , N2 , n₃ )  by rule ∃-intro on sum-m+1
+    |           |
+    |           | ∃ (n₃ : ℕ) : Sum( Suc(m) , N2 , n₃ )  by rule ∃-elim on d1, exn3
+    |
+    | ∀ (n₂ : ℕ) : ∃ (n₃ : ℕ) : Sum( Suc(m) , n₂ , n₃ )  by rule ∀-intro on uni-n2b
+```
+
+
+### Theorems
+A theorem is a statement followed by its proof.
+```
+theorem total : ∀ (n₁ : ℕ) (n₂ : ℕ) : ∃ (n₃ : ℕ) : Sum( n₁ , n₂ , n₃ )
+```
+
+#### Second-order Theorems
+We can have theorems parametrized by propositions.
+Here is an example:
+
+```
+theorem schema modus-ponens for all propositions P, K : P ==> K
+                                                      , P
+                                                      ⊢ K
+
+| p->k : P ==> K
+| p : P
+|--------------------
+|
+| K  by rule ==>-elim on p->k, p
+```
+
+We can then use this theorem as normal.
+
+```
+theorem use-modus-ponens : A ==> B , A ⊢ B
+
+| a->b : A ==> B
+| a : A
+|-------------------
+|
+| B  by theorem modus-ponens on a->b, a
+```
+
+> Note the difference! `P` and `K` are parameters so they are not actual propositional constants whereas `A` and `B` are understood as specific propositions.
+
+
+### Proofs
+Proofs are the most visually involved part. You start by writing the vertical and horizontal lines:
+```
+|
+|---------------------------
+|
+|
+|
+|
+```
+
+The lines above the long horizontal line are for premises while the space below the horizontal line is for deriving new information.
+
+Here is a simple theorem in propositional logic:
+```
+theorem foo : A ==> B ==> C ⊢ B ==> A ==> C
+| p : A ==> B ==> C
+|----------------------------------------------------------
+|
+| 0 : | p0 : B
+|     |----------------------------------------------------
+|     |
+|     | 1 : | p1 : A
+|     |     |----------------------------------------------
+|     |     |
+|     |     | b=>c : B ==> C  by rule ==>-elim on p, p1
+|     |     |
+|     |     | C  by rule ==>-elim on b=>c, p0
+|     |
+|     | A ==> C  by rule ==>-intro on 1
+|
+| B ==> A ==> C  by rule ==>-intro on 0
+```
+
+You have to name all your premises.
+You don't have to name all the asserted statements below the line. Only those you intend to refer to.
+The last one in a (sub-)proof is supposed to be proving the goal.
+
+You can use whatever names you want. Almost all characters are allowed except some special symbols that have concrete meanings in *detour*.
+
+See the [`./examples`](./examples) directory for a few examples.
+
+
+## Automated Proving
+The tool now supports a somewhat automated proof search.
+The goal is to focus on very interactive proving. It is not a goal to build a powerful automated theorem prover.
+However, with the correct use of tactics (in the future) it maybe could be.
+
+The theorem `total` from above now can be proved trivially:
+
+```
+theorem total : ∀ (N : ℕ) (M : ℕ) : ∃ (O : ℕ) : Sum(N, M, O)
+prove ∀ (N : ℕ) (M : ℕ) : ∃ (O : ℕ) : Sum(N, M, O)
+```
+
+<!-- ------
+------
+
+
+## TODO:
+- [x] remove the substitution `Const2Term`
+- [x] maybe have a special kind of term like `Rigid` variable? I don't remember for what, though.
+
+
+## TODO:
+- [x] a switch `--lem=true/false` that disallows (or allows) the *proof by contradiction* rule
+- [x] Lexer
+- [x] Parser
+- [x] the Data Type Representation
+- [x] named axioms in the global scope
+- [ ] ~~named sub-proofs in the global scope~~
+
+- [ ] Proof-checking
+  - [x] Unification
+  - [x] `check'rule`
+
+- [ ] Custom syntax
+  - [x] parsing syntax definitions
+  - [x] case analysis on objects
+    - [x] exhaustivity/specificity checking
+  - [x] induction on objects
+
+- [ ] Custom Rules
+  - [x] parsing judgment definitions
+  - [x] user-defined judgments
+    - [x] rules
+    - [ ] type-check the rule definitions (formulae in the premises and the result parts are well-formed)
+    - [x] implement `check-rule` for custom rules
+      - [x] the ∀-elim part
+      - [x] the ==>-elim part
+  - [ ] case analysis on propositions
+  - [ ] induction on propositions
+    - [ ] ~~check the strict positivity property~~
+
+- [ ] Typed Stuff
+  - [x] typing for terms
+  - [x] type unification
+
+- [ ] automated proving
+  - [ ] all connectives
+  - [ ] quantified formulae
+  - [x] induction
+  - [x] using theorems
+  - [x] using local assertions
+
+- [ ] second-order features
+  - [x] theorem schemata
+  - [ ] rule and judgment schemata over propositions
+
+- [ ] ~~REPL~~
+  - [ ] ~~the Console Command Mode~~ -->

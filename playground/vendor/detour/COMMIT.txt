@@ -1,0 +1,2 @@
+f6748eb369772113e7dd502b38821cadcf49bd37
+f6748eb keep only one GHC version

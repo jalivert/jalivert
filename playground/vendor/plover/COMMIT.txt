@@ -1,0 +1,2 @@
+4401f1f5b03ecd65740038b63857fd92ea2318e4
+4401f1f Fix crash on query before first :load

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect x="2" y="2" width="60" height="60" rx="12" fill="#050302"/>
+  <rect x="2" y="2" width="60" height="60" rx="12" fill="none" stroke="#ffb000" stroke-width="3"/>
+  <rect x="10" y="10" width="44" height="36" rx="6" fill="#0b0803"/>
+  <rect x="10" y="10" width="44" height="36" rx="6" fill="none" stroke="#6e4c08" stroke-width="1.5"/>
+  <text x="32" y="39" font-family="Georgia, 'Times New Roman', serif" font-size="26" fill="#ffb000" text-anchor="middle">λ</text>
+  <rect x="10" y="20" width="44" height="1.6" fill="#ffb000" opacity="0.12"/>
+  <rect x="10" y="28" width="44" height="1.6" fill="#ffb000" opacity="0.12"/>
+  <rect x="10" y="36" width="44" height="1.6" fill="#ffb000" opacity="0.12"/>
+  <rect x="24" y="48" width="16" height="4" rx="2" fill="#6e4c08"/>
+  <rect x="16" y="52" width="32" height="4" rx="2" fill="#4a3508"/>
+</svg>

@@ -1,0 +1,197 @@
+{ infixr 0 $
+; infixl 5 +
+; infixl 6 *
+; prefix 1 |>
+; postfixl 5 ?
+; infix 4 ==
+
+; undefined = undefined
+
+; class Num a where
+  { (+) :: a -> a -> a
+  ; (*) :: a -> a -> a }
+
+; class Eq a where
+  { (==) :: a -> a -> Bool }
+
+; data List a = Nil | Cons a (List a)
+
+; instance Eq a => Eq (List a) where
+  { (==) _ _ = False }
+
+-- ; instance Eq Bool where
+--   { (==) True True = True
+--   ; (==) True False = False
+--   ; (==) False False = True
+--   ; (==) False True = False }
+
+; id :: forall a . a -> a
+; id x = x
+
+; class Test a where
+  { meth :: a -> a }
+; instance Test Bool where
+  { meth a = id a }
+
+
+; instance Num Int
+; instance Num Double
+
+; class Num a => Fractional a
+
+; instance Fractional Double
+
+-- ; (|>) :: a -> Bool
+-- ; (|>) _ = True
+-- ; (|>) i = i
+
+-- ; (?) :: Bool -> Bool
+-- ; (?) a = a
+
+-- ; f'' = |> 23 ?
+-- ; f''' = 23 + |> 42
+-- ; f'''' = |> 23 + 42
+
+-- FOLLOWING IS ILLEGAL, AND MUST FAIL
+-- ; data Triple a b c = T a b c
+-- ; first' ((T x y) z) = z
+
+
+--
+-- SEEMS TO BE WORKING FINALLY
+--
+; not'broken :: Eq a => a -> Bool
+; not'broken a = Cons a Nil == Cons a Nil -- it's no longer broken
+-- ; ambiguous = (Cons undefined Nil) == (Cons undefined Nil) -- this should never work, there is ambiguous type variable because of undefined
+-- ; next'a _ = (Cons undefined Nil) == (Cons undefined Nil) -- this also should not work
+-- what is wrong with this expression?, :t says its not an expression
+-- (\ a -> (==) (Cons a Nil) (Cons a Nil))
+--
+
+-- ; fn :: a -> b -> c
+-- ; fn a b = if False then fn a b else gn a b
+-- ; gn :: x -> y -> z
+-- ; gn x y = fn 'a' y
+
+
+-- ; fire'in'the :: forall a b . a -> b -> b -> a
+-- ; fire'in'the x y y' = _
+
+-- this is supposed to work just fine
+; fn'hi :: forall b . (forall x y . x -> y -> x) -> b -> b
+; fn'hi g b =  let { x = g b 23
+                ; y = g b 'a' }
+            in  if True then x else y
+
+; x = fn'hi (\ i _ -> i) 23
+
+-- so I __think__ that in GHC it works because of ScopedTypeVariable extension
+-- I did not implement it, so I think what happens it similar to what happens in the one below
+-- skolems just escape their scope
+-- I guess, scoped type variable maybe changes the scope of those variables?
+-- I am not sure yet, I will need to find some paper on scoped type variable implementation
+-- ; fn (g :: forall x y . x -> y -> x) b
+--   = let { x = g b 23
+--         ; y = g b 'a' }
+--     in  if True then x else y
+
+-- THIS DOES NOT WORK, SKOLEMS WOULD ESCAPE THEIR SCOPE AND THAT IS ILLEGAL, breaks in GHC too
+-- ; fn g x = if True then (g :: forall x y . x -> y -> x) 'a' else (g :: forall x y . x -> y -> x) 42
+
+
+
+-- THIS BREAKS WITHOUT THE EXPLICIT ANNOTATION FOR `def`
+-- ; data Unit = Unit
+-- ; class Cals a where
+--   { call :: a -> a -> a }
+-- ; def :: Int
+-- ; def = 23
+-- ; instance Cals Int where
+--   { call a b = a }
+-- ; typed :: Unit -> Unit
+-- ; typed _ = let { x = call def def } in Unit
+
+
+
+
+
+
+-- ; data String = String [Char]
+
+-- ; class Show a where
+--   { show :: a -> String }
+
+-- THIS IS SUPPOSED TO FAIL, and it does now
+; fail :: Num a => a -> a -> a
+; fail a b = a + b
+-- ; xxx = fail 'a' 'b' -- Char is not an instance of Num
+-- ; yyy _ = fail True False -- Bool is not an instance of Num
+; zzz = fail 23 42
+
+-- -- all works as described
+-- ; data Carry = C (forall a . Num a => a -> a -> a)
+-- -- ; fail' (C fn) = fn 'c' 'a' -- this correctly fails
+-- ; fail'' :: Carry -> a -> a -> a -- context is too weak so it correctly fails
+-- ; fail'' (C fn) x y = fn x y -- without annotation if correctly infers Num
+
+--
+; data Fun = F (forall a . Num a => a -> a -> a)
+-- ; fa (F fn) = fn 'a' 'b' -- this correctly fails because Char is not an instance of Num
+; fb (F fn) = fn (23 :: Int) (42 :: Int)
+
+
+; data Bool = True | False
+
+; data Maybe a = Nothing | Just a
+
+-- ; number :: Int
+-- ; number = 23
+
+-- ; fnum :: Num a => a -> a
+-- ; fnum = \ a -> a
+-- 
+-- ; gnum :: Num a => a -> a -> a
+-- ; gnum = \ x y -> fnum x
+
+-- ; cool'num 23 = True
+-- ; cool'num 42 = True
+-- ; cool'num _ = False
+
+-- ; inter True 23 = 'a'
+-- ; inter False 42 = 'a'
+-- ; inter _ _ = 'z'
+
+-- ; foo fn True = fn True
+
+-- ; bar :: (x -> b) -> x -> b
+-- ; bar fn a = fn a
+
+
+-- ; ($) :: (a -> b) -> a -> b
+-- -- -- ; ($) = \ fn a -> fn a
+-- ; ($) fn a = fn a
+-- -- 
+-- -- ; tttest = cool'num $ 23 + 42
+
+
+-- ; loc :: Maybe a -> Maybe Int
+-- ; loc (Just a) = Just 23
+
+
+-- ; undefined = undefined
+
+
+-- ; fn'om :: Num a => b -> a
+-- ; fn'om x = 23
+
+-- ; arg = arg
+-- ; n     = fn'om arg
+-- TODO: this break without the parens
+-- either I have a bug in the type checker or I have an bug in the To'AST (GSYA)
+-- ; twice _ = fn'om arg + fn'om arg
+
+
+
+
+
+}

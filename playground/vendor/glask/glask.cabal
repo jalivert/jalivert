@@ -1,0 +1,223 @@
+cabal-version: 1.12
+
+-- Maintained by hand (was generated from package.yaml by hpack in the past).
+
+name:           glask
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/jalivert/glask#readme>
+homepage:       https://github.com/jalivert/glask#readme
+bug-reports:    https://github.com/jalivert/glask/issues
+author:         jalivert
+maintainer:     example@example.com
+copyright:      2021 jalivert
+license:        MIT
+license-files:  LICENSE
+build-type:     Simple
+extra-source-files:
+    src/Compiler/Lexer/Lexer.x
+    src/Compiler/Parser/Parser.y
+
+source-repository head
+  type: git
+  location: https://github.com/jalivert/glask
+
+library
+  exposed-modules:
+      Compiler.Analysis.Extract
+      Compiler.Analysis.Semantic.ClassEnv
+      Compiler.Analysis.Semantic.Data
+      Compiler.Analysis.Semantic.Dependency.Binding
+      Compiler.Analysis.Semantic.Dependency.Depends
+      Compiler.Analysis.Semantic.Dependency.Types
+      Compiler.Analysis.Semantic.SemanticError
+      Compiler.Analysis.Semantic.Synonym.Cycles
+      Compiler.Analysis.Semantic.Synonym.FullyApplied
+      Compiler.Analysis.Syntactic.Annotations
+      Compiler.Analysis.Syntactic.Bindings
+      Compiler.Analysis.Syntactic.Class
+      Compiler.Analysis.Syntactic.ConstraintEnv
+      Compiler.Analysis.Syntactic.ConstrEnv
+      Compiler.Analysis.Syntactic.Constructors
+      Compiler.Analysis.Syntactic.Data
+      Compiler.Analysis.Syntactic.FieldEnv
+      Compiler.Analysis.Syntactic.Fixity
+      Compiler.Analysis.Syntactic.FixityEnv
+      Compiler.Analysis.Syntactic.Instance
+      Compiler.Analysis.Syntactic.MethodAnnotations
+      Compiler.Analysis.Syntactic.MethodBindings
+      Compiler.Analysis.Syntactic.SynonymEnv
+      Compiler.Analysis.Syntactic.Synonyms
+      Compiler.Analysis.Syntactic.Types
+      Compiler.Counter
+      Compiler.Lexer
+      Compiler.Lexer.Lexer
+      Compiler.Lexer.LexerState
+      Compiler.Lexer.Located
+      Compiler.Lexer.Position
+      Compiler.Lexer.Token
+      Compiler.Lexer.Utils
+      Compiler.Parser
+      Compiler.Parser.Parser
+      Compiler.Parser.Utils
+      Compiler.Syntax
+      Compiler.Syntax.Associativity
+      Compiler.Syntax.BindGroup
+      Compiler.Syntax.Declaration
+      Compiler.Syntax.Expression
+      Compiler.Syntax.Fixity
+      Compiler.Syntax.HasKind
+      Compiler.Syntax.Instance
+      Compiler.Syntax.Kind
+      Compiler.Syntax.Literal
+      Compiler.Syntax.Match
+      Compiler.Syntax.Name
+      Compiler.Syntax.Overloaded
+      Compiler.Syntax.Pattern
+      Compiler.Syntax.Placeholder
+      Compiler.Syntax.Predicate
+      Compiler.Syntax.Qualified
+      Compiler.Syntax.Signature
+      Compiler.Syntax.Term
+      Compiler.Syntax.Term.Declaration
+      Compiler.Syntax.Term.Expression
+      Compiler.Syntax.Term.Identifier
+      Compiler.Syntax.Term.Pattern
+      Compiler.Syntax.Term.Predicate
+      Compiler.Syntax.Term.Type
+      Compiler.Syntax.TFun
+      Compiler.Syntax.ToAST
+      Compiler.Syntax.ToAST.GSYA
+      Compiler.Syntax.ToAST.GSYA.Token
+      Compiler.Syntax.ToAST.Translate
+      Compiler.Syntax.ToAST.TranslateEnv
+      Compiler.Syntax.ToAST.TranslateState
+      Compiler.Syntax.Type
+      Compiler.TypeSystem.Actual
+      Compiler.TypeSystem.Ambiguity
+      Compiler.TypeSystem.Assumption
+      Compiler.TypeSystem.Binding
+      Compiler.TypeSystem.BindSection
+      Compiler.TypeSystem.Class
+      Compiler.TypeSystem.ClassEnv
+      Compiler.TypeSystem.Constraint
+      Compiler.TypeSystem.Error
+      Compiler.TypeSystem.Expected
+      Compiler.TypeSystem.Infer
+      Compiler.TypeSystem.InferenceEnv
+      Compiler.TypeSystem.InferenceState
+      Compiler.TypeSystem.Kind.Infer.Annotation
+      Compiler.TypeSystem.Kind.Infer.Class
+      Compiler.TypeSystem.Kind.Infer.Data
+      Compiler.TypeSystem.Kind.Infer.Instance
+      Compiler.TypeSystem.Kind.Infer.Program
+      Compiler.TypeSystem.Kind.Infer.Type
+      Compiler.TypeSystem.Kind.Infer.TypeSection
+      Compiler.TypeSystem.Program
+      Compiler.TypeSystem.Solver
+      Compiler.TypeSystem.Solver.Bind
+      Compiler.TypeSystem.Solver.Composable
+      Compiler.TypeSystem.Solver.InvolvesPoly
+      Compiler.TypeSystem.Solver.Lift
+      Compiler.TypeSystem.Solver.Occurs
+      Compiler.TypeSystem.Solver.Solve
+      Compiler.TypeSystem.Solver.Substitutable
+      Compiler.TypeSystem.Solver.Substitution
+      Compiler.TypeSystem.Solver.Unify
+      Compiler.TypeSystem.Type.Constants
+      Compiler.TypeSystem.Type.Infer.BindSection
+      Compiler.TypeSystem.Type.Infer.Declaration
+      Compiler.TypeSystem.Type.Infer.Explicit
+      Compiler.TypeSystem.Type.Infer.Expression
+      Compiler.TypeSystem.Type.Infer.Implicit
+      Compiler.TypeSystem.Type.Infer.Literal
+      Compiler.TypeSystem.Type.Infer.Match
+      Compiler.TypeSystem.Type.Infer.Method
+      Compiler.TypeSystem.Type.Infer.Pattern
+      Compiler.TypeSystem.Type.Infer.Program
+      Compiler.TypeSystem.TypeSection
+      Compiler.TypeSystem.Utils.Class
+      Compiler.TypeSystem.Utils.Infer
+      REPL.Analyses
+      REPL.Expression
+      REPL.Load
+      REPL.Program
+      REPL.Repl
+      REPL.Type
+      Interpreter.Address
+      Interpreter.Core
+      Interpreter.Environment
+      Interpreter.Error
+      Interpreter.Evaluate
+      Interpreter.Promise
+      Interpreter.State
+      Interpreter.Store
+      Interpreter.ToCore
+      Interpreter.Value
+  other-modules:
+      Paths_glask
+  hs-source-dirs:
+      src
+  build-depends:
+      array
+    , base >=4.7 && <5
+    , containers >=0.6.2.1
+    , directory
+    , extra
+    , filepath
+    , hspec
+    , mtl
+    , transformers
+    , utf8-string
+  default-language: Haskell2010
+
+executable glask-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_glask
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N -Wall -Weverything -Wno-missing-safe-haskell-mode -Wno-unsafe -Wno-safe -Wno-unused-packages
+  build-depends:
+      array
+    , base >=4.7 && <5
+    , containers >=0.6.2.1
+    , directory
+    , extra
+    , filepath
+    , glask
+    , hspec
+    , mtl
+    , transformers
+    , utf8-string
+  default-language: Haskell2010
+
+test-suite glask-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      LexerSpec
+      ParserSpec
+      ExamplesSpec
+      InferSpec
+      ClassesSpec
+      EvalSpec
+      NegativeSpec
+      GoldenSpec
+      KindSpec
+      Paths_glask
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      array
+    , base >=4.7 && <5
+    , containers >=0.6.2.1
+    , directory
+    , extra
+    , filepath
+    , glask
+    , hspec
+    , mtl
+    , transformers
+    , utf8-string
+  default-language: Haskell2010

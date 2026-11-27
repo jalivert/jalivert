@@ -1,0 +1,126 @@
+cabal-version: 1.12
+
+-- Previously generated from package.yaml by hpack; now maintained by hand.
+
+name:           frea
+version:        0.1.0.0
+description:    Frea is a small programming language with Damas-Hindley-Milner type inference
+homepage:       https://github.com/jalivert/frea#readme
+bug-reports:    https://github.com/jalivert/frea/issues
+author:         Jan Liam Verter
+maintainer:     jali@verter.cz
+copyright:      2021 Jan Liam Verter
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    ChangeLog.md
+    src/Compiler/Parser/Lexer.x
+    src/Compiler/Parser/Parser.y
+
+source-repository head
+  type: git
+  location: https://github.com/jalivert/frea
+
+library
+  exposed-modules:
+      Compiler.Parser.Lexer
+      Compiler.Parser.Parser
+      Compiler.Parser.Token
+      Compiler.Parser.Utils
+      Compiler.Syntax
+      Compiler.Syntax.Bind
+      Compiler.Syntax.Declaration
+      Compiler.Syntax.Expression
+      Compiler.Syntax.Kind
+      Compiler.Syntax.Literal
+      Compiler.Syntax.MatchGroup
+      Compiler.Syntax.Pattern
+      Compiler.Syntax.Signature
+      Compiler.Syntax.Type
+      Compiler.TypeAnalyzer.Analyze
+      Compiler.TypeAnalyzer.AnalyzeEnv
+      Compiler.TypeAnalyzer.AnalyzeState
+      Compiler.TypeAnalyzer.AnalyzeUtils
+      Compiler.TypeAnalyzer.Constraint
+      Compiler.TypeAnalyzer.Dependency
+      Compiler.TypeAnalyzer.Error
+      Compiler.TypeAnalyzer.Kind.Infer
+      Compiler.TypeAnalyzer.Kind.KindOf
+      Compiler.TypeAnalyzer.Solver
+      Compiler.TypeAnalyzer.Substituable
+      Compiler.TypeAnalyzer.Type.Analyze
+      Compiler.TypeAnalyzer.Type.Evaluate
+      Compiler.TypeAnalyzer.TypeOf
+      Compiler.TypeAnalyzer.Types
+      Interpreter.Address
+      Interpreter.Evaluate
+      Interpreter.Print
+      Interpreter.Value
+  other-modules:
+      Paths_frea
+  hs-source-dirs:
+      src
+  build-depends:
+      array
+    , base >=4.7 && <5
+    , containers >=0.6.2.1
+    , directory
+    , extra
+    , filepath
+    , hspec
+    , mtl
+    , transformers
+    , utf8-string
+  default-language: Haskell2010
+
+executable frea-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_frea
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      array
+    , base >=4.7 && <5
+    , containers >=0.6.2.1
+    , directory
+    , extra
+    , filepath
+    , frea
+    , hspec
+    , mtl
+    , transformers
+    , utf8-string
+  default-language: Haskell2010
+
+test-suite frea-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      EvalSpec
+      ErrorSpec
+      InferenceSpec
+      KindSpec
+      ModuleSpec
+      ParserDeclSpec
+      ParserSpec
+      TypeSynonymSpec
+      Paths_frea
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      array
+    , base >=4.7 && <5
+    , containers >=0.6.2.1
+    , directory
+    , extra
+    , filepath
+    , frea
+    , hspec
+    , mtl
+    , transformers
+    , utf8-string
+  default-language: Haskell2010
